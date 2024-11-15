@@ -1,0 +1,7 @@
+{
+  "name": "appeventos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
