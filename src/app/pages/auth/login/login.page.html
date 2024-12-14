@@ -1,0 +1,30 @@
+
+<ion-content>
+
+  <img [src]="currentImage" alt="Tema actual" />
+<br>
+  <ion-card>
+    <form [formGroup]="form">
+      <ion-item>
+        <ion-input
+          type="email"
+          placeholder="Correo electronico"
+          formControlName="email"
+        ><ion-icon name="mail-outline" slot="end"></ion-icon></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="password"
+          placeholder="Contraseña"
+          formControlName="password"
+        ><ion-icon name="key-outline" slot="end"></ion-icon></ion-input>
+      </ion-item>
+      <ion-button type="submit" expand="block" (click)="ingresar()"
+        >Ingresar</ion-button
+      >
+      <ion-button type="submit" expand="block" routerLink="/register"
+        >Registrate</ion-button
+      >
+    </form>
+  </ion-card>
+</ion-content>

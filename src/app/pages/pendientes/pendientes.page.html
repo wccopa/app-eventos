@@ -1,0 +1,37 @@
+<ion-content>
+  <!-- Mostrar porcentaje de pendientes completados -->
+  <ion-card *ngIf="pendientes.length > 0" class="ion-margin">
+    <ion-card-header>
+      <ion-card-title>Progreso de Pendientes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="porcentaje-container">
+        <ion-text>
+          <h2>{{ calcularPorcentajeCompletados() }}% Completado</h2>
+        </ion-text>
+        <ion-progress-bar 
+          [value]="calcularPorcentajeCompletados() / 100" 
+          color="success"
+        ></ion-progress-bar>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón para agregar pendiente -->
+  <ion-button expand="block" (click)="openAddPendienteModal()">Agregar Pendiente</ion-button>
+
+  <!-- Lista de pendientes -->
+  <ion-list>
+    <ion-item *ngFor="let pendiente of pendientes">
+      <ion-label>
+        <h2>{{ pendiente.nombre }}</h2>
+      </ion-label>
+      <ion-checkbox
+        slot="end"
+        [checked]="pendiente.estado === 'completado'"
+        (ionChange)="toggleEstado(pendiente)"
+      ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

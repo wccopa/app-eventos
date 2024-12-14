@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Pendiente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="pendienteForm" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label position="floating">Nombre del Pendiente</ion-label>
+      <ion-input
+        formControlName="nombre"
+        type="text"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!pendienteForm.valid">
+      Agregar Pendiente
+    </ion-button>
+  </form>
+</ion-content>

@@ -1,0 +1,32 @@
+<!-- cantidad-personas.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cantidad de Personas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input
+      type="number"
+      label="Cantidad"
+      placeholder="Ingrese la cantidad"
+      [value]="cantidad"
+      (ionInput)="cantidad = $any($event).detail.value"
+      min="1"
+    ></ion-input>
+  </ion-item>
+
+  <ion-button 
+    expand="block" 
+    class="ion-margin-top" 
+    (click)="confirmar()"
+  >
+    Confirmar
+  </ion-button>
+</ion-content>

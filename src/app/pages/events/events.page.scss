@@ -1,0 +1,50 @@
+ion-card {
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  ion-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+  }
+  
+  .fecha  {
+    font-size: 18px;
+    // color: #007bff;
+    margin: 0;
+    justify-content: center;
+    display: flex;
+  }
+  
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  h3,
+  p {
+    
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  ul {
+    padding-left: 20px;
+  }
+  
+  li {
+    font-size: 12px;
+  }
+
+  .centro{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+  }
+  .derecha{
+    display: flex;
+    justify-content: end;
+  }

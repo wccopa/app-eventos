@@ -1,0 +1,168 @@
+<ion-content class="ion-padding">
+  <p>{{ fechaSeleccionada }}</p>
+
+  <form>
+    <ion-item>
+      <ion-select
+        label="Tipo de evento:"
+        placeholder="Seleccione"
+        [(ngModel)]="tipoEventoSeleccionado"
+        (ionChange)="onTipoEventoChange($event)"
+        name="tipoEvento"
+      >
+        <ion-select-option value="Cumpleaños">Cumpleaños</ion-select-option>
+        <ion-select-option value="Promocion">Promoción</ion-select-option>
+        <ion-select-option value="Reunión">Reunión</ion-select-option>
+        <ion-select-option value="Reunión">Matrimonio</ion-select-option>
+        <ion-select-option value="Reunión">Bautizo</ion-select-option>
+        <ion-select-option value="Reunión">15 Años</ion-select-option>
+        <ion-select-option value="Reunión">Almuerzo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        label="Plato:"
+        placeholder="Seleccione"
+        [(ngModel)]="platoSeleccionado"
+        (ionChange)="onPlatoChange($event)"
+        name="plato"
+      >
+        <ion-select-option *ngFor="let plato of platos" [value]="plato.nombre">
+          {{ plato.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Adicional al plato -->
+    <ion-item>
+      <ion-label>Adicional al plato</ion-label>
+      <ion-button (click)="agregarAdicional()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-list *ngIf="adicional.length > 0">
+      <ion-item *ngFor="let adicional of adicional">
+        <ion-label>{{ adicional.nombre }}</ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="danger"
+          (click)="eliminarAdicional(adicional)"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="adicional.length === 0">
+      <ion-label color="medium">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        No hay adicionales agregados
+      </ion-label>
+    </ion-item>
+    <!-- fin adicionales -->
+
+    <ion-item button (click)="abrirModalCantidad()">
+      <ion-label>Cantidad de Personas:</ion-label>
+      <ion-text slot="end">{{ cantidadPersonas || '- -' }}</ion-text>
+    </ion-item>
+
+    <ion-item button (click)="abrirModalPrecio()">
+      <ion-label>Precio:</ion-label>
+      <ion-text slot="end">{{ precioevento || '- -' }}</ion-text>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        label="Hora:"
+        [(ngModel)]="horaSeleccionada"
+        (ionChange)="onHoraChange($event)"
+        placeholder="Seleccione"
+        name="hora"
+      >
+        <ion-select-option *ngFor="let hora of horas" [value]="hora">
+          {{hora}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Extras -->
+    <ion-item>
+      <ion-label>Extras</ion-label>
+      <ion-button (click)="agregarExtra()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-list *ngIf="extras.length > 0">
+      <ion-item *ngFor="let extra of extras">
+        <ion-label>{{extra.cantidad}} {{ extra.nombre }}</ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="danger"
+          (click)="eliminarExtra(extra)"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-item *ngIf="extras.length === 0">
+      <ion-label color="medium">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        No hay extras agregados
+      </ion-label>
+    </ion-item>
+    <!-- fin extras -->
+
+    <!-- Adelanto -->
+    <ion-item>
+      <ion-label>Adelanto:</ion-label>
+      <ion-button (click)="abrirModalAdelanto()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <!-- Mostrar la lista de adelantos -->
+    <ion-list *ngIf="adelanto?.length > 0">
+      <ion-item *ngFor="let item of adelanto">
+        <ion-label>{{ item.montoAdelanto || 'Sin monto' }}</ion-label>
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="danger"
+          (click)="eliminarAdelanto(item)"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <!-- Cliente -->
+    <ion-item button (click)="abrirModalCliente()">
+      <ion-label>Nombre de Cliente:</ion-label>
+      <ion-text slot="end">{{ cliente || 'Nombre' }}</ion-text>
+    </ion-item>
+
+    <ion-item button (click)="abrirModalNumeroCliente()">
+      <ion-label>Numero del Cliente:</ion-label>
+      <ion-text slot="end">{{ numCliente || '999-999-9999' }}</ion-text>
+    </ion-item>
+  </form>
+
+  <!-- Mesas y sillas -->
+  <ion-item button (click)="abrirModalMesas()">
+    <ion-label>N° de mesas: </ion-label>
+    <ion-text slot="end">{{ numMesas || '- -' }}</ion-text>
+  </ion-item>
+
+  <ion-item button (click)="abrirModalSillas()">
+    <ion-label>N° de sillas por mesa: </ion-label>
+    <ion-text slot="end">{{ numSillas || '- -' }}</ion-text>
+  </ion-item>
+
+  <ion-button expand="block" (click)="guardarEvento()">Agregar</ion-button>
+</ion-content>

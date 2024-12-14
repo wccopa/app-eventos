@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Encargado</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelar()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-input
+      type="text"
+      [value]="nombreEncargado"
+      (ionInput)="nombreEncargado = $any($event).detail.value"
+      placeholder="Ingrese el nombre del Encargado">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      type="text"
+      [value]="tipoEncargado"
+      (ionInput)="tipoEncargado = $any($event).detail.value"
+      placeholder="Ingrese el tipo del Encargado">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      type="tel"
+      [value]="celularEncargado"
+      (ionInput)="celularEncargado = $any($event).detail.value"
+      placeholder="Ingrese el número de celular">
+    </ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="guardarEncargado()">
+    Guardar Encargado
+  </ion-button>
+</ion-content>

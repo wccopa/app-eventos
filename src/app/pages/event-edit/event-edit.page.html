@@ -1,0 +1,136 @@
+<ion-content class="ion-padding">
+  <div class="fecha">
+    <h1>{{ fechaSeleccionada }}</h1>
+  </div>
+
+  <form [formGroup]="eventForm">
+    <ion-item>
+      <ion-select
+        label="Tipo de evento:"
+        placeholder="Seleccione"
+        formControlName="tipoEvento"
+      >
+      <ion-select-option value="Cumpleaños">Cumpleaños</ion-select-option>
+      <ion-select-option value="Promocion">Promoción</ion-select-option>
+      <ion-select-option value="Reunión">Reunión</ion-select-option>
+      <ion-select-option value="Reunión">Matrimonio</ion-select-option>
+      <ion-select-option value="Reunión">Bautizo</ion-select-option>
+      <ion-select-option value="Reunión">15 Años</ion-select-option>
+      <ion-select-option value="Reunión">Almuerzo</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-select
+        label="Plato:"
+        placeholder="Seleccione"
+        formControlName="plato"
+      >
+        <ion-select-option *ngFor="let plato of platos" [value]="plato.nombre">
+          {{ plato.nombre }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item button (click)="abrirModalCantidad()">
+      <ion-label>Cantidad de Personas:</ion-label>
+      <ion-text slot="end">{{ eventForm.get('cantidadPersonas').value || '00' }}</ion-text>
+    </ion-item>
+
+    <ion-item button (click)="abrirModalPrecio()">
+      <ion-label>Precio:</ion-label>
+      <ion-text slot="end">{{ eventForm.get('precioEvento').value || '00.00' }}</ion-text>
+    </ion-item>
+
+    <!-- Adelantos -->
+    <ion-item>
+      <ion-label>Adelantos</ion-label>
+      <ion-button (click)="agregarAdelanto()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-list *ngIf="adelanto?.length > 0">
+      <ul>
+        <ion-item  *ngFor="let item of adelanto; let i = index">
+          <ion-label>{{ item?.montoAdelanto || 'Sin monto' }}</ion-label>
+        </ion-item>
+        
+      </ul>
+    </ion-list>
+    
+    <ion-item *ngIf="adelanto?.length === 0">
+      <ion-label color="medium">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        No hay adelantos registrados
+      </ion-label>
+    </ion-item>
+    
+    <!-- Adicionales -->
+    <ion-item>
+      <ion-label>Adicionales</ion-label>
+      <ion-button (click)="agregarAdicional()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-list *ngIf="adicional?.length > 0">
+      <ul *ngFor="let item of adicional; let i = index">
+        <ion-item>
+          <ion-label>{{ item?.nombre || 'Sin nombre' }}</ion-label>
+          <ion-button color="danger" slot="end" (click)="eliminarAdicional(i)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ul>
+    </ion-list>
+    
+    <ion-item *ngIf="adicional?.length === 0">
+      <ion-label color="medium">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        No hay adicionales registrados
+      </ion-label>
+    </ion-item>
+    
+    <!-- Extras -->
+    <ion-item>
+      <ion-label>Extras</ion-label>
+      <ion-button (click)="agregarExtra()" slot="end">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-item>
+    
+    <ion-list *ngIf="eventForm.get('extras').value?.length > 0">
+      <ion-item *ngFor="let item of eventForm.get('extras').value; let i = index">
+        <ion-label>{{ item.cantidad || 'Sin nombre' }} - {{ item.nombre || 0 }}</ion-label>
+        <ion-button color="danger" slot="end" (click)="eliminarExtra(i)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    
+    <ion-item *ngIf="eventForm.get('extras').value?.length === 0">
+      <ion-label color="medium">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        No hay extras registrados
+      </ion-label>
+    </ion-item>
+    
+    
+
+
+    <ion-item>
+      <ion-select
+        label="Hora:"
+        formControlName="hora"
+        placeholder="Seleccione"
+      >
+        <ion-select-option *ngFor="let hora of horas" [value]="hora">
+          {{hora}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" (click)="guardarCambios()">Guardar Cambios</ion-button>
+  </form>
+</ion-content>

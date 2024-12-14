@@ -1,0 +1,110 @@
+<ion-content>
+  <br />
+  <div class="asd">
+    <ion-item *ngFor="let evento of eventos" lines="none" class="evento-item">
+      <div class="evento-detalle">
+        <!-- Fecha centrada -->
+        <div class="fecha">
+          <h1>{{ evento.fecha }}</h1>
+          <p>Saldo restante: {{ calcularSaldo(evento) }}</p>
+        </div>
+
+        <!-- Detalles del evento -->
+        <div class="info">
+          <div class="row">
+            <span class="label">Tipo de evento:</span>
+            <span class="value">{{ evento.tipoEvento }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Hora:</span>
+            <span class="value">{{ evento.hora }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Cliente:</span>
+            <span class="value">{{ evento.cliente }}</span>
+          </div>
+          <div class="row">
+            <span class="label"
+              >Celular:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+            >
+            <span class="value">{{ evento.numCliente }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Personas:</span>
+            <span class="value">{{ evento.cantidadPersonas }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Precio:</span>
+            <span class="value">S/. {{ evento.precioEvento }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Adelantos:</span>
+          </div>
+          <ul>
+            <li *ngFor="let adelanto of eventos[0].adelanto">
+              <span
+                ><strong>Monto:</strong> {{ adelanto.montoAdelanto | currency
+                }}</span
+              ><br />
+              <span
+                ><strong>Fecha:</strong> {{ adelanto.fechaAdelanto | date:
+                'dd/MM/yyyy' }}</span
+              >
+            </li>
+          </ul>
+
+          <!-- Mensaje si no hay adelantos -->
+          <div *ngIf="eventos[0].adelanto.length === 0">
+            <p>No hay adelantos registrados para este evento.</p>
+          </div>
+          <div class="row">
+            <span class="label">Plato:</span>
+            <span class="value">{{ evento.platoNombre }}</span>
+          </div>
+          <div class="row">
+            <span class="label">Adicionales al plato:</span>
+          </div>
+          <ul>
+            <li *ngFor="let adicional of evento.adicional">
+              {{ adicional.nombre }}
+            </li>
+          </ul>
+          <div class="row">
+            <span class="label">Extras:</span>
+          </div>
+
+          <ul>
+            <li *ngFor="let extra of evento.extras">
+              {{extra.cantidad}} {{ extra.nombre }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Adelanto y botón al final -->
+
+        <ion-button
+          color="success"
+          expand="block"
+          (click)="imprimirCotizacion()"
+          >Imprimir <ion-icon name="print-outline"></ion-icon
+        ></ion-button>
+        <ion-button expand="block" (click)="pendientesOnDate()"
+          >Pendientes<ion-icon name="checkbox-outline"></ion-icon
+        ></ion-button>
+
+        <div class="boton">
+          <ion-button color="danger" (click)="confirmarEliminacion(evento)">
+            Eliminar evento<ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button color="primary" (click)="editarEvento(evento)"
+            >Editar evento<ion-icon name="pencil"></ion-icon
+          ></ion-button>
+        </div>
+      </div>
+    </ion-item>
+  </div>
+
+  <ion-text color="medium" class="ion-text-center" *ngIf="eventos.length === 0">
+    <p>No hay eventos registrados para esta fecha</p>
+  </ion-text>
+</ion-content>

@@ -24,7 +24,6 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
-
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -33,5 +32,65 @@
  */
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+@import "@ionic/angular/css/palettes/dark.class.css";
+// @import '@ionic/angular/css/palettes/dark.system.css';
+
+ion-header {
+  ion-title {
+    flex: 1; /* Hace que el ion-title ocupe el espacio disponible */
+    text-align: center; /* Centra el texto */
+  }
+}
+
+ion-toggle{
+  --padding: 10px;  
+}
+
+
+ion-item {
+  --background: transparent; /* Quita el fondo */
+  --ion-background-color: transparent; /* Alternativa si aplica */
+}
+ion-list {
+  --background: transparent; /* Quita el fondo */
+  --ion-background-color: transparent; /* Alternativa si aplica */
+}
+ion-card {
+  --background: transparent; /* Quita el fondo */
+  --ion-background-color: transparent; /* Alternativa si aplica */
+}
+
+ion-datetime{
+  --background: transparent; /* Quita el fondo */
+  --ion-background-color: transparent; /* Alternativa si aplica */
+}
+
+
+ion-list {
+  --background: transparent; /* Quita el fondo del ion-list */
+}
+
+ion-list ul {
+  background: transparent; /* Quita el fondo de la lista (ul) */
+}
+
+ion-list ul li {
+  background: transparent; /* Quita el fondo de los elementos li */
+}
+
+ion-list {
+  --background: transparent !important; /* Asegura que el fondo del ion-list sea transparente */
+}
+
+ion-item {
+  --background: transparent !important; /* Quita el fondo de los ion-items */
+  background: transparent !important; /* Asegura que no haya fondo adicional */
+}
+
+
+
+
+
+
+
+

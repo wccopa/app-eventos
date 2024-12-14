@@ -1,0 +1,100 @@
+<ion-menu contentId="main-content" type="overlay">
+  <ion-content>
+    <img [src]="currentImage" alt="Tema actual" />
+
+
+
+    
+    <!-- home -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/home']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'home' + '-outline'"
+          [md]="'home' + '-outline'"
+        ></ion-icon>
+        <ion-label> Inicio </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <!-- eventos -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/events']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'albums' + '-outline'"
+          [md]="'albums' + '-outline'"
+        ></ion-icon>
+        <ion-label> Eventos </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <!-- platos -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/foodlist']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'fast-food' + '-outline'"
+          [md]="'fast-food' + '-outline'"
+        ></ion-icon>
+        <ion-label> Platos </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <!-- trabajadores -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/worker']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'people' + '-outline'"
+          [md]="'people' + '-outline'"
+        ></ion-icon>
+        <ion-label> Trabajadores </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <!-- perfil -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/profile']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'person' + '-outline'"
+          [md]="'person' + '-outline'"
+        ></ion-icon>
+        <ion-label> Mi perfil </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>

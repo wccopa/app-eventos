@@ -1,0 +1,27 @@
+<ion-content>
+  <ion-item>
+    <ion-label><strong>Nombre:</strong></ion-label>
+    <ion-label><strong>Tipo:</strong></ion-label>
+    <ion-label><strong>Num:</strong></ion-label>
+  </ion-item>
+
+  <ion-item *ngFor="let e of encargado">
+    <ion-label>{{ e.nombre }}</ion-label>
+    <ion-label>{{ e.tipo }}</ion-label>
+    <ion-label>{{ e.celular }}</ion-label>
+    <ion-button slot="end" color="danger" (click)="eliminarEncargado(e.id)">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+  <div *ngIf="encargado.length === 0" class="ion-text-center ion-padding">
+    <p>No hay trabajadores agregados</p>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="abrirModalAgregarEncargado()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

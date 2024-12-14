@@ -1,0 +1,27 @@
+<ion-item>
+  <ion-label>Extras</ion-label>
+  <ion-button (click)="agregarExtra()" slot="end">
+    <ion-icon name="add"></ion-icon>
+  </ion-button>
+</ion-item>
+
+<ion-list>
+  <ul *ngFor="let extra of extras">
+    <ion-label>{{ extra.nombre }}</ion-label>
+    <ion-button
+      slot="end"
+      fill="clear"
+      color="danger"
+      (click)="eliminarExtra(extra)"
+    >
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ul>
+</ion-list>
+
+<ion-item *ngIf="extras.length === 0">
+  <ion-label color="medium">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    No hay extras agregados
+  </ion-label>
+</ion-item>

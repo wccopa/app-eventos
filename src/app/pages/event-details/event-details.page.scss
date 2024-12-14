@@ -1,0 +1,60 @@
+// ion-content {
+//   --background: #fafafa; /* Fondo blanco grisáceo */
+// }
+
+ion-item {
+  // --background: white; /* Fondo blanco */
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+// ion-label {
+//   font-weight: bold;
+//   color: #546e7a; /* Texto gris azulado */
+// }
+
+// ion-select {
+//   --color: #37474f; /* Texto principal azul petróleo */
+// }
+
+// ion-select-option {
+//   --color: #333; /* Texto de las opciones */
+// }
+
+// ion-button {
+//   --background: blue; /* Botones azul grisáceo */
+//   // --background-activated: green; /* Efecto activado (azul petróleo oscuro) */
+//   // --background-focused: #78909c; /* Efecto enfocado (azul grisáceo claro) */
+//   // --color: white; /* Texto blanco */
+//   --border-radius: 6px;
+//   font-weight: bold;
+// }
+
+// ion-button[slot="end"] {
+//   --background: #00242d; /* Botones con íconos gris azulado */
+//   --background-activated: #00242d; /* Efecto activado */
+//   --background-focused: #cfd8dc; /* Efecto enfocado */
+//   --color: white; /* Texto blanco */
+// }
+
+ion-text {
+  font-size: 16px;
+}
+
+form {
+  margin-top: 16px;
+}
+
+.app-extras {
+  margin: 16px 0;
+}
+
+/* Estilo para el texto de la fecha seleccionada */
+p {
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 16px 0;
+}
+
+

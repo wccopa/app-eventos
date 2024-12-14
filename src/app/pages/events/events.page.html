@@ -1,0 +1,33 @@
+<ion-content>
+  <br />
+  <ion-item *ngFor="let evento of eventos" button>
+    <ion-label>
+      <div>
+        <div class="fecha"><h1>{{ evento.fecha }}</h1></div>
+      </div>
+      <ion-card (click)="verEvento(evento)">
+        <h2>{{ evento.tipoEvento }}</h2>
+        <h3><strong>Plato: </strong>{{ evento.platoNombre }}</h3>
+        <h3><strong>Cliente: </strong>{{ evento.cliente }}</h3>
+        <h3><strong>Celular: </strong>{{ evento.numCliente }}</h3>
+        <h3><strong>N° Mesas: </strong>{{ evento.numMesas }}</h3>
+        <h3><strong>N° Sillas: </strong>{{ evento.numSillas }}</h3>
+
+        <div class="centro">
+          <ion-badge [color]="tieneAdelantos(evento) ? 'success' : 'warning'">
+            {{ tieneAdelantos(evento) ? 'Con adelanto' : 'Sin adelanto' }}
+          </ion-badge>
+        </div>
+      </ion-card>
+      <div class="derecha">
+        <ion-button color="danger" (click)="confirmarEliminacion(evento)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-label>
+  </ion-item>
+
+  <ion-text color="medium" class="ion-text-center" *ngIf="eventos.length === 0">
+    <p>No hay eventos registrados para esta fecha</p>
+  </ion-text>
+</ion-content>

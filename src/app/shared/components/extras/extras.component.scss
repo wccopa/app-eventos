@@ -1,0 +1,14 @@
+ion-item {
+    --background: white; /* Fondo de los ítems */
+    border: 1px solid #ddd; /* Bordes suaves */
+    border-radius: 8px;
+    margin: 8px 0;
+    font-weight: bold;
+  }
+
+  ion-button {
+    --background: gray; /* Botones verdes */
+    --color: white; /* Texto blanco */
+    --border-radius: 6px;
+    font-weight: bold;
+  }

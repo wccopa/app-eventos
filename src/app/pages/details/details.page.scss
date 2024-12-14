@@ -1,0 +1,63 @@
+ion-list {
+  padding: 50px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+.fecha {
+  text-align: center;
+  margin-bottom: 16px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+.fecha h1 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 0;
+  width: 100%; /* Asegura que el h1 ocupe todo el ancho */
+}
+
+.info {
+  margin-bottom: 16px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0;
+  width: 100%; /* Asegura que la fila ocupe todo el ancho disponible */
+}
+
+.label {
+  font-weight: bold;
+  width: auto; /* Asegura que la etiqueta solo ocupe el espacio necesario */
+}
+
+.acciones {
+  text-align: center;
+  margin-top: 16px;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+}
+
+ion-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  width: auto; /* Deja que ocupe solo el espacio necesario */
+}
+
+.asd{
+  display: flex;
+  justify-content: center;
+}
+
+.boton {
+  display: flex;
+  width: 100%; 
+  justify-content: space-evenly;
+}
+
+
