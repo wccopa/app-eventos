@@ -149,10 +149,12 @@ export class PendientesPage implements OnInit {
         pendiente.estado = 'incompleto';
       }
     } else {
-      // Guardar directamente si el estado cambia a incompleto
-      this.guardarPendiente();
+      // Asignar el precio a 0 cuando se desmarca como incompleto
+      pendiente.precio = 0; // Asignar el valor 0 como precio
+      this.guardarPendiente(); // Guardar los cambios
     }
   }
+  
   
 
   calcularPorcentajeCompletados(): number {
@@ -161,5 +163,10 @@ export class PendientesPage implements OnInit {
     const completados = this.pendientes.filter(p => p.estado === 'completado').length;
     return Math.round((completados / this.pendientes.length) * 100);
   }
+
+  calcularTotalPrecios(): number {
+    return this.pendientes.reduce((total, pendiente) => total + (pendiente.precio || 0), 0);
+  }
+  
 
 }

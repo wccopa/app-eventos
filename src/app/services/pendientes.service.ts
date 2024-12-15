@@ -51,4 +51,19 @@ export class PendientesService {
       pendiente: pendientes
     });
   }
+
+  // Nuevo método para obtener todos los pendientes
+  getPendientes(): Observable<Fecha[]> {
+    const pendientesRef = this.firestore.collection<Fecha>('fechas');
+    
+    return pendientesRef.snapshotChanges().pipe(
+      map(actions => 
+        actions.map(a => {
+          const data = a.payload.doc.data() as Fecha;
+          const uid = a.payload.doc.id;
+          return { ...data, uid };
+        })
+      )
+    );
+  }
 }

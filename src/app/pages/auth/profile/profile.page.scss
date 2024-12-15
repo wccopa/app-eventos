@@ -1,3 +1,78 @@
-.contenido{
-    padding: 10px;
-}
+.contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centra el contenido */
+    justify-content: center;
+    padding: 20px;
+    text-align: center;  /* Alinea el texto en el centro */
+  }
+  
+  ion-card {
+    width: 100%;
+    max-width: 600px;  /* Máximo ancho para las tarjetas */
+    margin: 10px 0;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  
+  ion-card-header {
+    padding-bottom: 10px;
+  }
+  
+  ion-card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--ion-text-color);  /* Color de texto por defecto de Ionic */
+  }
+  
+  ion-card-content {
+    font-size: 1rem;
+    color: var(--ion-text-color);  /* Color de texto por defecto */
+    line-height: 1.6;
+  }
+  
+  p {
+    margin: 10px 0;
+    font-size: 1rem;
+    text-align: left;
+    display: flex;  /* Uso de flexbox para alinear contenido */
+    justify-content: space-between;  /* Espacio entre la etiqueta y el valor */
+    align-items: center;  /* Alineación vertical del contenido */
+  }
+  
+  /* Responsividad para dispositivos móviles */
+  @media (max-width: 768px) {
+    /* En dispositivos móviles o pantallas pequeñas */
+    ion-card {
+      max-width: 100%;  /* Las tarjetas ocuparán todo el ancho disponible */
+      padding: 15px;
+    }
+  
+    ion-card-title {
+      font-size: 1rem;
+    }
+  
+    p {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Para pantallas grandes (PC y tabletas) */
+  @media (min-width: 769px) {
+    ion-card {
+      max-width: 700px;  /* Ajuste en pantallas más grandes */
+      padding: 25px;
+    }
+  
+    ion-card-title {
+      font-size: 1.3rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  }
+  

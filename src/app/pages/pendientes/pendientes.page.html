@@ -21,28 +21,37 @@
   <ion-button expand="block" (click)="openAddPendienteModal()">Agregar Pendiente</ion-button>
 
   <!-- Lista de pendientes -->
-  <ion-list>
-    <ion-item *ngFor="let pendiente of pendientes; let i = index">
-      <ion-label>
-        <h2>{{ pendiente.nombre }}</h2>
-      </ion-label>
-      <!-- Checkbox para marcar como completado -->
-      <ion-checkbox
-        slot="end"
-        [checked]="pendiente.estado === 'completado'"
-        (ionChange)="toggleEstado(pendiente)"
-      ></ion-checkbox>
-      <!-- Botón de eliminar -->
-      <ion-button 
-        color="danger" 
-        fill="clear" 
-        slot="end" 
-        (click)="eliminarPendiente(i)"
-      >
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+<ion-list>
+  <ion-item *ngFor="let pendiente of pendientes; let i = index">
+    <ion-label>
+      <h2>{{ pendiente.nombre }}</h2>
+      <h2>S/ {{ pendiente.precio || 0 }}</h2>
+    </ion-label>
+    <!-- Checkbox para marcar como completado -->
+    <ion-checkbox
+      slot="end"
+      [checked]="pendiente.estado === 'completado'"
+      (ionChange)="toggleEstado(pendiente)"
+    ></ion-checkbox>
+    <!-- Botón de eliminar -->
+    <ion-button 
+      color="danger" 
+      fill="clear" 
+      slot="end" 
+      (click)="eliminarPendiente(i)"
+    >
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-list>
+
+<!-- Total de precios -->
+<ion-item lines="full">
+  <ion-label class="ion-text-end">
+    <h2><strong>Total: S/ {{ calcularTotalPrecios() | number:'1.2-2' }}</strong></h2>
+  </ion-label>
+</ion-item>
+
   
 
 </ion-content>

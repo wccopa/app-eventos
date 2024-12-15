@@ -1,7 +1,28 @@
 <ion-content>
   <div class="contenido">
-    <h3><strong>Usuario:</strong> {{userInfo.name}}</h3>
-    <h3><strong>Usuario:</strong> {{userInfo.email}}</h3>
-    <ion-button (click)="cerrarSesion()">cerrar sesión</ion-button>
+    <h3><strong>Usuario:</strong> {{userInfo?.name}}</h3>
+    <h3><strong>Email:</strong> {{userInfo?.email}}</h3>
+
+    <h3><strong>Eventos y Pendientes:</strong></h3>
+    
+    <ion-card *ngFor="let evento of eventos">
+      <ion-card-header>
+        <ion-card-title>
+          {{ evento.tipoEvento }} - {{ evento.fecha }}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Cliente:</strong> {{ evento.cliente}}</p>
+        <p><strong>Precio del Evento:</strong> {{ evento.precioEvento | currency }}</p>
+        
+        <ng-container *ngIf="getPendienteForFecha(evento.fecha) as pendiente">
+          <p><strong>Costo del Evento:</strong> {{ pendiente?.precio | currency }}</p>
+
+          <p><strong>Saldo del evento:</strong> {{ (evento.precioEvento - pendiente?.precio) | currency }}</p>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="full" (click)="cerrarSesion()">Cerrar Sesión</ion-button>
   </div>
 </ion-content>
