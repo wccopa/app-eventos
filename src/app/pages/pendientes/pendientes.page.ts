@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, Inject, OnInit } from '@angular/core';
 import { PendientesService } from 'src/app/services/pendientes.service';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { AddPendienteModalComponent } from 'src/app/shared/components/add-pendiente-modal/add-pendiente-modal.component';
 import { Pendiente } from 'src/app/interfaces/pendientes.module';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-pendientes',
@@ -11,12 +11,13 @@ import { Pendiente } from 'src/app/interfaces/pendientes.module';
   styleUrls: ['./pendientes.page.scss'],
 })
 export class PendientesPage implements OnInit {
+  alertController = inject(AlertController)
+  modalService = inject(ModalService)
   pendientes: Pendiente[] = [];
   fechaSeleccionada: string = ''; 
 
   constructor(
     private pendientesService: PendientesService,
-    private modalController: ModalController,
     private route: ActivatedRoute
   ) {}
 
@@ -33,11 +34,9 @@ export class PendientesPage implements OnInit {
 
   async cargarPendientes() {
     try {
-      // Adjust the return type handling based on your service method
       const fechaDoc = await this.pendientesService.getDocumentByFecha(this.fechaSeleccionada);
       
       if (fechaDoc) {
-        // Ensure type safety when accessing pendiente
         this.pendientes = fechaDoc.pendiente || []; 
       } else {
         this.pendientes = []; 
@@ -48,23 +47,41 @@ export class PendientesPage implements OnInit {
   }
 
   async openAddPendienteModal() {
-    const modal = await this.modalController.create({
-      component: AddPendienteModalComponent,
+    const alert = await this.alertController.create({
+      header: 'Agregar Pendiente',
+      inputs: [
+        {
+          name: 'nombre',
+          type: 'text',
+          placeholder: 'Nombre del pendiente',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Agregar',
+          handler: async (data) => {
+            if (data.nombre && data.nombre.trim() !== '') {
+              const nuevoPendiente: Pendiente = {
+                nombre: data.nombre.trim(),
+                estado: 'incompleto',
+              };
+              this.pendientes.push(nuevoPendiente);
+              await this.guardarPendiente();
+            } else {
+              console.log('El nombre del pendiente no puede estar vacío.');
+            }
+          },
+        },
+      ],
     });
-
-    modal.onDidDismiss().then((data) => {
-      if (data.data) {
-        const nuevoPendiente: Pendiente = {
-          nombre: data.data.nombre,
-          estado: 'incompleto', 
-        };
-        this.pendientes.push(nuevoPendiente);
-        this.guardarPendiente();
-      }
-    });
-
-    await modal.present();
+  
+    await alert.present();
   }
+  
 
   async guardarPendiente() {
     try {
@@ -79,10 +96,59 @@ export class PendientesPage implements OnInit {
     }
   }
 
-  toggleEstado(pendiente: Pendiente) {
-    pendiente.estado = pendiente.estado === 'completado' ? 'incompleto' : 'completado';
-    this.guardarPendiente();
+  async eliminarPendiente(index: number) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar Eliminación',
+      message: '¿Estás seguro de que deseas eliminar este pendiente?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            try {
+              this.pendientes.splice(index, 1); // Eliminar pendiente de la lista
+              await this.guardarPendiente(); // Actualizar la base de datos
+            } catch (error) {
+              console.error('Error al eliminar el pendiente:', error);
+            }
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
   }
+  
+
+  async toggleEstado(pendiente: Pendiente) {
+    pendiente.estado = pendiente.estado === 'completado' ? 'incompleto' : 'completado';
+  
+    if (pendiente.estado === 'completado') {
+      // Abrir el modal para ingresar el precio
+      const precio = await this.modalService.openInputModal<number>({
+        header: 'Asignar Precio',
+        type: 'number',
+        placeholder: 'Ingrese el precio',
+        minValue: 0.01,
+      });
+  
+      if (precio != null) {
+        pendiente.precio = precio; // Asignar el precio al pendiente
+        this.guardarPendiente(); // Guardar los cambios
+      } else {
+        // Si no se ingresó precio, revertir el estado del pendiente
+        pendiente.estado = 'incompleto';
+      }
+    } else {
+      // Guardar directamente si el estado cambia a incompleto
+      this.guardarPendiente();
+    }
+  }
+  
 
   calcularPorcentajeCompletados(): number {
     if (this.pendientes.length === 0) return 0;

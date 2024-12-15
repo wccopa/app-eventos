@@ -22,16 +22,27 @@
 
   <!-- Lista de pendientes -->
   <ion-list>
-    <ion-item *ngFor="let pendiente of pendientes">
+    <ion-item *ngFor="let pendiente of pendientes; let i = index">
       <ion-label>
         <h2>{{ pendiente.nombre }}</h2>
       </ion-label>
+      <!-- Checkbox para marcar como completado -->
       <ion-checkbox
         slot="end"
         [checked]="pendiente.estado === 'completado'"
         (ionChange)="toggleEstado(pendiente)"
       ></ion-checkbox>
+      <!-- Botón de eliminar -->
+      <ion-button 
+        color="danger" 
+        fill="clear" 
+        slot="end" 
+        (click)="eliminarPendiente(i)"
+      >
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
+  
 
 </ion-content>

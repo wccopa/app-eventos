@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 export interface Pendiente {
   nombre: string;
   estado: 'completado' | 'incompleto'; // More strict type for estado
+  precio?: number;
   uid?: string;
 }
 
