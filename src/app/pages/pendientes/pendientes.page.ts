@@ -69,8 +69,12 @@ export class PendientesPage implements OnInit {
                 nombre: data.nombre.trim(),
                 estado: 'incompleto',
               };
+  
+              // Agregar a la lista inmediatamente
               this.pendientes.push(nuevoPendiente);
-              await this.guardarPendiente();
+  
+              // Guardar en segundo plano
+              this.guardarPendiente();
             } else {
               console.log('El nombre del pendiente no puede estar vacío.');
             }
@@ -81,6 +85,7 @@ export class PendientesPage implements OnInit {
   
     await alert.present();
   }
+  
   
 
   async guardarPendiente() {
@@ -109,12 +114,11 @@ export class PendientesPage implements OnInit {
           text: 'Eliminar',
           role: 'destructive',
           handler: async () => {
-            try {
-              this.pendientes.splice(index, 1); // Eliminar pendiente de la lista
-              await this.guardarPendiente(); // Actualizar la base de datos
-            } catch (error) {
-              console.error('Error al eliminar el pendiente:', error);
-            }
+            // Eliminar de la lista inmediatamente
+            this.pendientes.splice(index, 1);
+  
+            // Guardar en segundo plano
+            this.guardarPendiente();
           },
         },
       ],
@@ -122,6 +126,7 @@ export class PendientesPage implements OnInit {
   
     await alert.present();
   }
+  
   
 
   async toggleEstado(pendiente: Pendiente) {
