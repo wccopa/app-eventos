@@ -13,7 +13,7 @@
       </ion-card-header>
       <ion-card-content>
         <p><strong>Cliente:</strong> {{ evento.cliente}}</p>
-        <p><strong>Precio del Evento:</strong> {{ evento.precioEvento | currency }}</p>
+        <p><strong>Precio del Evento:</strong> {{ evento.precioEvento | currency}}</p>
         
         <ng-container *ngIf="getPendienteForFecha(evento.fecha) as pendiente">
           <p><strong>Costo del Evento:</strong> {{ pendiente?.precio | currency }}</p>

@@ -1,63 +1,132 @@
-ion-list {
-  padding: 50px;
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+/* Estilos generales */
+ion-content {
+  --padding-start: 10px;
+  --padding-end: 10px;
 }
 
+.asd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.evento-item {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.evento-detalle {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+}
+
+/* Fecha centrada */
 .fecha {
   text-align: center;
-  margin-bottom: 16px;
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  margin-bottom: 10px;
 }
 
 .fecha h1 {
-  font-size: 1.4rem;
-  font-weight: bold;
+  font-size: 1.5rem;
   margin: 0;
-  width: 100%; /* Asegura que el h1 ocupe todo el ancho */
 }
 
+.fecha p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/* Detalles del evento */
 .info {
-  margin-bottom: 16px;
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  margin-top: 15px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin: 4px 0;
-  width: 100%; /* Asegura que la fila ocupe todo el ancho disponible */
+  margin: 8px 0;
 }
 
 .label {
   font-weight: bold;
-  width: auto; /* Asegura que la etiqueta solo ocupe el espacio necesario */
+  flex: 1;
 }
 
-.acciones {
-  text-align: center;
-  margin-top: 16px;
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
+.value {
+  text-align: right;
+  flex: 2;
 }
 
-ion-badge {
-  display: inline-block;
-  margin-bottom: 8px;
-  font-size: 0.85rem;
-  padding: 4px 8px;
-  border-radius: 12px;
-  width: auto; /* Deja que ocupe solo el espacio necesario */
+/* Listas de adelantos, adicionales y extras */
+ul {
+  padding-left: 20px;
+  list-style-type: none;
 }
 
-.asd{
-  display: flex;
-  justify-content: center;
+ul li {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+ul li span {
+  display: block;
+}
+
+ul li strong {
+  font-weight: bold;
+}
+
+/* Botones */
+ion-button {
+  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Ajustes para cuando no hay eventos */
+ion-text {
+  margin-top: 20px;
+  font-size: 1.2rem;
 }
 
 .boton {
   display: flex;
-  width: 100%; 
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
+.boton ion-button {
+  width: 48%;
+}
 
+/* Responsividad */
+@media screen and (min-width: 768px) {
+  /* Para pantallas más grandes, podemos centrar el contenido */
+  .evento-item {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+  .evento-detalle {
+    padding: 20px;
+  }
+
+  .fecha h1 {
+    font-size: 2rem;
+  }
+
+  .fecha p {
+    font-size: 1.2rem;
+  }
+
+  .row {
+    margin: 15px 0;
+  }
+
+  .label, .value {
+    font-size: 1.1rem;
+  }
+
+  
+}

@@ -6,7 +6,7 @@
         <!-- Fecha centrada -->
         <div class="fecha">
           <h1>{{ evento.fecha }}</h1>
-          <p>Saldo restante: {{ calcularSaldo(evento) }}</p>
+          <p>Saldo restante: {{ calcularSaldo(evento) | currency:"PEN" }}</p>
         </div>
 
         <!-- Detalles del evento -->
@@ -25,7 +25,7 @@
           </div>
           <div class="row">
             <span class="label"
-              >Celular:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+              >Celular:</span
             >
             <span class="value">{{ evento.numCliente }}</span>
           </div>
@@ -35,7 +35,7 @@
           </div>
           <div class="row">
             <span class="label">Precio:</span>
-            <span class="value">S/. {{ evento.precioEvento }}</span>
+            <span class="value">{{ evento.precioEvento | currency}}</span>
           </div>
           <div class="row">
             <span class="label">Adelantos:</span>
@@ -43,13 +43,14 @@
           <ul>
             <li *ngFor="let adelanto of eventos[0].adelanto">
               <span
-                ><strong>Monto:</strong> {{ adelanto.montoAdelanto | currency
-                }}</span
-              ><br />
-              <span
                 ><strong>Fecha:</strong> {{ adelanto.fechaAdelanto | date:
                 'dd/MM/yyyy' }}</span
               >
+              <span
+                ><strong>Monto:</strong> {{ adelanto.montoAdelanto | currency
+                }}</span
+              >
+              <br>
             </li>
           </ul>
 
