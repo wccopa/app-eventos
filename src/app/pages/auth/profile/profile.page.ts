@@ -60,9 +60,17 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // Método para obtener el pendiente correspondiente a la fecha del evento
-  getPendienteForFecha(eventoFecha: string): Pendiente | undefined {
-    const fechaPendiente = this.pendientes.find(p => p.fecha === eventoFecha);
-    return fechaPendiente?.pendiente[0];  // Suponiendo que el pendiente es un arreglo y tomamos el primero
+  getPendienteForFecha(eventoFecha: string): number {
+    return this.getSumaPendientesPorFecha(eventoFecha);
   }
+  
+
+  getSumaPendientesPorFecha(fecha: string): number {
+    const fechaPendiente = this.pendientes.find(p => p.fecha === fecha);
+    if (fechaPendiente) {
+      return fechaPendiente.pendiente.reduce((total, pendiente) => total + (pendiente.precio || 0), 0);
+    }
+    return 0; // Si no hay pendientes, retorna 0
+  }
+  
 }

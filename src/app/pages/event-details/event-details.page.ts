@@ -25,7 +25,7 @@ export class EventDetailsPage implements OnInit {
   cliente: string | null = null;
   numCliente: string | null = null;
   precioevento: number | null = null;
-  adelanto: Adelanto[] = [];  // Cambiar a un arreglo de Adelantos
+  adelanto?: Adelanto[] = [];  // Cambiar a un arreglo de Adelantos
   horaSeleccionada: string = '';
   fechaSeleccionada: string;
   tipoEventoSeleccionado: string = '';
@@ -273,10 +273,7 @@ async abrirModalSillas() {
       this.mostrarToast('Ingrese el numero del cliente', 'danger');
       return false;
     }
-    if (!this.adelanto || this.adelanto.length === 0 || !this.adelanto.every(a => a.montoAdelanto > 0)) {
-      this.mostrarToast('Ingrese un adelanto válido', 'danger');
-      return false;
-    }
+    
   
     return true;
   }
