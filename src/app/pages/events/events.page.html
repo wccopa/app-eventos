@@ -14,8 +14,8 @@
         <h3><strong>N° Sillas: </strong>{{ evento.numSillas }}</h3>
 
         <div class="centro">
-          <ion-badge [color]="tieneAdelantos(evento) ? 'success' : 'warning'">
-            {{ tieneAdelantos(evento) ? 'Con adelanto' : 'Sin adelanto' }}
+          <ion-badge [color]="tieneAdelantos(evento)">
+            {{ tieneAdelantos(evento) === 'danger' ? 'Pago Completo' : tieneAdelantos(evento) === 'success' ? 'Con adelanto' : 'Sin adelanto' }}
           </ion-badge>
         </div>
       </ion-card>

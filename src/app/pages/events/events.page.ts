@@ -89,9 +89,23 @@ export class EventsPage implements OnInit {
     return evento.precioEvento - totalAdelantado;
   }
   
-  tieneAdelantos(evento: Evento): boolean {
-    return evento.adelanto.length > 0;
+  tieneAdelantos(evento: Evento): string {
+    const totalAdelantado = evento.adelanto.reduce((acc, adelanto) => acc + adelanto.montoAdelanto, 0);
+  
+    // Si el precio del evento es igual a la suma de los adelantos, es rojo
+    if (evento.precioEvento === totalAdelantado) {
+      return 'danger';  // Rojo
+    }
+  
+    // Si hay adelantos pero no es igual al total, es verde
+    if (totalAdelantado > 0) {
+      return 'success';  // Verde
+    }
+  
+    // Si no hay adelantos, es amarillo
+    return 'warning';  // Amarillo
   }
+  
 
   
 

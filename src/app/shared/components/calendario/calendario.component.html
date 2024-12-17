@@ -1,7 +1,5 @@
 <div class="calendario">
-  <ion-datetime
-    (ionChange)="onDateSelect($event)"
-    [highlightedDates]="highlightedDates"
-  >
+  <ion-datetime class="custom-calendar" (ionChange)="onDateSelect($event)" [highlightedDates]="highlightedDates"
+    presentation="date">
   </ion-datetime>
 </div>

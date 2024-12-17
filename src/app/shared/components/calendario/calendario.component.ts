@@ -36,25 +36,10 @@ export class CalendarioComponent  implements OnInit {
 
   procesarEventos() {
     this.highlightedDates = this.eventos.map(evento => {
-      // Validar que evento.adelanto sea un array, o asignar un array vacío
-      const adelantos = Array.isArray(evento.adelanto) ? evento.adelanto : [];
-    
-      // Calcular el total adelantado de forma segura
-      const totalAdelantado = adelantos.reduce((acc, adelanto) => {
-        const monto = adelanto?.montoAdelanto ?? 0; // Validar montoAdelanto
-        return acc + monto;
-      }, 0);
-    
-      // Calcular el saldo restante
-      const saldoRestante = evento.precioEvento - totalAdelantado;
-    
-      // Determinar el color de fondo
-      let backgroundColor = '#ffc409'; // Amarillo por defecto
-      if (totalAdelantado > 0) {
-        backgroundColor = '#2dd36f'; // Verde si hay adelanto
-      }
-      if (totalAdelantado === evento.precioEvento) {
-        backgroundColor = '#ff0000'; // Rojo si el adelanto cubre el precio total
+      // Determinar el color de fondo basado en si el evento está reservado
+      let backgroundColor = '#ffc409'; // Amarillo por defecto (fecha no reservada)
+      if (evento.fecha) {
+        backgroundColor = '#2dd36f'; // Verde si hay una reserva (fecha reservada)
       }
     
       // Retornar el objeto de estilos para cada fecha
@@ -65,9 +50,6 @@ export class CalendarioComponent  implements OnInit {
       };
     });
   }
-  
-  
-  
 
   async onDateSelect(event: any) {
     const formattedDate = event.detail.value.split('T')[0];
