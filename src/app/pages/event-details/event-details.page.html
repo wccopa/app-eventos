@@ -10,13 +10,13 @@
         (ionChange)="onTipoEventoChange($event)"
         name="tipoEvento"
       >
-        <ion-select-option value="Cumpleaños">Cumpleaños</ion-select-option>
-        <ion-select-option value="Promocion">Promoción</ion-select-option>
-        <ion-select-option value="Reunión">Reunión</ion-select-option>
-        <ion-select-option value="Reunión">Matrimonio</ion-select-option>
-        <ion-select-option value="Reunión">Bautizo</ion-select-option>
-        <ion-select-option value="Reunión">15 Años</ion-select-option>
-        <ion-select-option value="Reunión">Almuerzo</ion-select-option>
+        <ion-select-option value="Cumpleaños">CUMPLEAÑOS</ion-select-option>
+        <ion-select-option value="Promocion">PROMOCIÓN</ion-select-option>
+        <ion-select-option value="Reunión">REUNIÓN</ion-select-option>
+        <ion-select-option value="Reunión">MATRIMONIO</ion-select-option>
+        <ion-select-option value="Reunión">BAUTIZO</ion-select-option>
+        <ion-select-option value="Reunión">15 AÑOS</ion-select-option>
+        <ion-select-option value="Reunión">ALMUERZO</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -26,9 +26,9 @@
         placeholder="Seleccione"
         [(ngModel)]="platoSeleccionado"
         (ionChange)="onPlatoChange($event)"
-        name="plato"
+        name="plato" 
       >
-        <ion-select-option *ngFor="let plato of platos" [value]="plato.nombre">
+        <ion-select-option *ngFor="let plato of platos" [value]="plato.nombre" style="text-transform: uppercase;">
           {{ plato.nombre }}
         </ion-select-option>
       </ion-select>
@@ -44,7 +44,7 @@
 
     <ion-list *ngIf="adicional.length > 0">
       <ion-item *ngFor="let adicional of adicional">
-        <ion-label>{{ adicional.nombre }}</ion-label>
+        <ion-label style="text-transform: uppercase;">{{ adicional.nombre }}</ion-label>
         <ion-button
           slot="end"
           fill="clear"
@@ -57,7 +57,7 @@
     </ion-list>
 
     <ion-item *ngIf="adicional.length === 0">
-      <ion-label color="medium">
+      <ion-label color="medium" >
         <ion-icon name="information-circle-outline"></ion-icon>
         No hay adicionales agregados
       </ion-label>
@@ -98,7 +98,7 @@
 
     <ion-list *ngIf="extras.length > 0">
       <ion-item *ngFor="let extra of extras">
-        <ion-label>{{extra.cantidad}} {{ extra.nombre }}</ion-label>
+        <ion-label style="text-transform: uppercase;">{{extra.cantidad}} {{ extra.nombre }}</ion-label>
         <ion-button
           slot="end"
           fill="clear"
@@ -144,7 +144,7 @@
     <!-- Cliente -->
     <ion-item button (click)="abrirModalCliente()">
       <ion-label>Nombre de Cliente:</ion-label>
-      <ion-text slot="end">{{ cliente || 'Nombre' }}</ion-text>
+      <ion-text slot="end" style="text-transform: uppercase;">{{ cliente || 'Nombre' }}</ion-text>
     </ion-item>
 
     <ion-item button (click)="abrirModalNumeroCliente()">

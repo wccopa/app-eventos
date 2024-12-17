@@ -1,0 +1,47 @@
+ion-content {
+    padding: 16px;
+  }
+  
+  ion-card {
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+  
+  ion-card-header {
+    text-align: center; /* Centra el título del card */
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  ion-card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre los párrafos */
+  }
+  
+  ion-card-content p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between; /* Alinea los elementos a los extremos */
+    font-size: 1rem;
+  }
+  
+  ion-card-content p strong {
+    font-weight: bold;
+  }
+  
+  @media (max-width: 600px) {
+    ion-card-title {
+      font-size: 1rem; /* Ajuste para pantallas más pequeñas */
+    }
+  
+    ion-card-content p {
+      font-size: 0.9rem; /* Ajuste para pantallas más pequeñas */
+    }
+  }

@@ -14,11 +14,8 @@ import { Observable } from 'rxjs';
 export class ProfilePage implements OnInit {
 
   userInfo: { name: string, email: string } | null = null;
-  eventos: Evento[] = [];
-  pendientes: Fecha[] = [];
   authService = inject(AuthService);
   firebaseService = inject(FirebaseService);
-  pendientesService = inject(PendientesService);
 
   async cerrarSesion() {
     this.authService.cerrarSesion();
@@ -27,7 +24,6 @@ export class ProfilePage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.getEventosYPendientes();  // Llamamos al método que obtiene los eventos y pendientes
     this.userInfo = this.getUserInfo();
   }
 
@@ -47,30 +43,6 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  // Método para obtener eventos y pendientes
-  getEventosYPendientes() {
-    // Llamar al servicio para obtener eventos
-    this.firebaseService.getEventos().subscribe((eventos: Evento[]) => {
-      this.eventos = eventos;
-    });
-
-    // Llamar al servicio para obtener pendientes
-    this.pendientesService.getPendientes().subscribe((pendientes: Fecha[]) => {
-      this.pendientes = pendientes;
-    });
-  }
-
-  getPendienteForFecha(eventoFecha: string): number {
-    return this.getSumaPendientesPorFecha(eventoFecha);
-  }
   
-
-  getSumaPendientesPorFecha(fecha: string): number {
-    const fechaPendiente = this.pendientes.find(p => p.fecha === fecha);
-    if (fechaPendiente) {
-      return fechaPendiente.pendiente.reduce((total, pendiente) => total + (pendiente.precio || 0), 0);
-    }
-    return 0; // Si no hay pendientes, retorna 0
-  }
   
 }

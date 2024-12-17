@@ -78,6 +78,24 @@
       </ion-item>
     </ion-menu-toggle>
 
+    <!-- reportes -->
+
+    <ion-menu-toggle>
+      <ion-item
+        routerDirection="root"
+        [routerLink]="['/reporte']"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon
+          slot="start"
+          [ios]="'book' + '-outline'"
+          [md]="'book' + '-outline'"
+        ></ion-icon>
+        <ion-label> Reportes </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
     <!-- perfil -->
 
     <ion-menu-toggle>

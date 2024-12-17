@@ -71,6 +71,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pendientes/pendientes.module').then( m => m.PendientesPageModule),
     data: {title: 'Pendientes'}
   },
+  {
+    path: 'reporte',
+    loadChildren: () => import('./pages/reporte/reporte.module').then( m => m.ReportePageModule),
+    canActivate: [authGuard],
+    data: {title: 'Reportes'}
+  },
   
 ];
 

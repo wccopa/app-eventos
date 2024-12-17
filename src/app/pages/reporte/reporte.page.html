@@ -1,0 +1,24 @@
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let evento of eventos">
+    <ion-card-header>
+      <ion-card-title>
+        {{ evento.tipoEvento }} - {{ evento.fecha }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Cliente:</strong> {{ evento.cliente }}</p>
+      <p>
+        <strong>Precio del Evento:</strong> {{ evento.precioEvento | currency }}
+      </p>
+
+      <p *ngIf="getPendienteForFecha(evento.fecha) as sumaPendientes">
+        <strong>Costo del Evento:</strong> {{ sumaPendientes | currency }}
+      </p>
+
+      <p *ngIf="getPendienteForFecha(evento.fecha) as sumaPendientes">
+        <strong>Saldo del evento:</strong> {{ (evento.precioEvento -
+        sumaPendientes) | currency }}
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

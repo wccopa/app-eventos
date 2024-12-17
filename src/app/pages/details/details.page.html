@@ -13,7 +13,7 @@
         <div class="info">
           <div class="row">
             <span class="label">Tipo de evento:</span>
-            <span class="value">{{ evento.tipoEvento }}</span>
+            <span class="value" style="text-transform: uppercase;">{{ evento.tipoEvento }}</span>
           </div>
           <div class="row">
             <span class="label">Hora:</span>
@@ -21,7 +21,7 @@
           </div>
           <div class="row">
             <span class="label">Cliente:</span>
-            <span class="value">{{ evento.cliente }}</span>
+            <span class="value" style="text-transform: uppercase;">{{ evento.cliente }}</span>
           </div>
           <div class="row">
             <span class="label"
@@ -59,14 +59,14 @@
             <p>No hay adelantos registrados para este evento.</p>
           </div>
           <div class="row">
-            <span class="label">Plato:</span>
-            <span class="value">{{ evento.platoNombre }}</span>
+            <span class="label" >Plato:</span>
+            <span class="value" style="text-transform: uppercase;">{{ evento.platoNombre }}</span>
           </div>
           <div class="row">
             <span class="label">Adicionales al plato:</span>
           </div>
           <ul>
-            <li *ngFor="let adicional of evento.adicional">
+            <li *ngFor="let adicional of evento.adicional" style="text-transform: uppercase;">
               {{ adicional.nombre }}
             </li>
           </ul>
@@ -75,7 +75,7 @@
           </div>
 
           <ul>
-            <li *ngFor="let extra of evento.extras">
+            <li *ngFor="let extra of evento.extras" style="text-transform: uppercase;">
               {{extra.cantidad}} {{ extra.nombre }}
             </li>
           </ul>

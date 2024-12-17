@@ -6,8 +6,8 @@
   </ion-item>
 
   <ion-item *ngFor="let e of encargado">
-    <ion-label>{{ e.nombre }}</ion-label>
-    <ion-label>{{ e.tipo }}</ion-label>
+    <ion-label style="text-transform: uppercase;">{{ e.nombre }}</ion-label>
+    <ion-label style="text-transform: uppercase;">{{ e.tipo }}</ion-label>
     <ion-label>{{ e.celular }}</ion-label>
     <ion-button slot="end" color="danger" (click)="eliminarEncargado(e.id)">
       <ion-icon name="trash"></ion-icon>

@@ -3,28 +3,8 @@
     <h3><strong>Usuario:</strong> {{ userInfo?.name }}</h3>
     <h3><strong>Email:</strong> {{ userInfo?.email }}</h3>
 
-    <h3><strong>Eventos y Pendientes:</strong></h3>
-
-    <ion-card *ngFor="let evento of eventos">
-      <ion-card-header>
-        <ion-card-title>
-          {{ evento.tipoEvento }} - {{ evento.fecha }}
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p><strong>Cliente:</strong> {{ evento.cliente }}</p>
-        <p><strong>Precio del Evento:</strong> {{ evento.precioEvento | currency }}</p>
-
-        <p *ngIf="getPendienteForFecha(evento.fecha) as sumaPendientes">
-          <strong>Costo del Evento:</strong> {{ sumaPendientes | currency }}
-        </p>
-
-        <p *ngIf="getPendienteForFecha(evento.fecha) as sumaPendientes">
-          <strong>Saldo del evento:</strong> {{ (evento.precioEvento - sumaPendientes) | currency }}
-        </p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-button expand="full" (click)="cerrarSesion()">Cerrar Sesión</ion-button>
+    <ion-button expand="full" (click)="cerrarSesion()"
+      >Cerrar Sesión</ion-button
+    >
   </div>
 </ion-content>
