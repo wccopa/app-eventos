@@ -24,7 +24,7 @@
   <!-- Lista de pendientes -->
 <ion-list>
   <ion-item *ngFor="let pendiente of pendientes; let i = index">
-    <ion-label>
+    <ion-label style="text-transform: uppercase;">
       <h2>{{ pendiente.nombre }}</h2>
       <h2>S/ {{ pendiente.precio || 0 }}</h2>
     </ion-label>

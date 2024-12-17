@@ -13,9 +13,8 @@ import { ModalService } from 'src/app/services/modal.service';
   styleUrls: ['./event-details.page.scss'],
 })
 export class EventDetailsPage implements OnInit {
-
   modalService = inject(ModalService);
-  alertController = inject(AlertController); 
+  alertController = inject(AlertController);
   route = inject(ActivatedRoute);
   firebaseService = inject(FirebaseService);
   toastController = inject(ToastController);
@@ -25,7 +24,7 @@ export class EventDetailsPage implements OnInit {
   cliente: string | null = null;
   numCliente: string | null = null;
   precioevento: number | null = null;
-  adelanto?: Adelanto[] = [];  // Cambiar a un arreglo de Adelantos
+  adelanto?: Adelanto[] = []; 
   horaSeleccionada: string = '';
   fechaSeleccionada: string;
   tipoEventoSeleccionado: string = '';
@@ -35,7 +34,6 @@ export class EventDetailsPage implements OnInit {
   extras: Extra[] = [];
   numMesas: number | null = null;
   numSillas: number | null = null;
-  
 
   constructor() {
     this.loadPlatos();
@@ -82,9 +80,9 @@ export class EventDetailsPage implements OnInit {
       header: 'Cantidad de Personas',
       type: 'number',
       placeholder: 'Ingrese la cantidad',
-      minValue: 1
+      minValue: 1,
     });
-  
+
     if (cantidad !== null) {
       this.cantidadPersonas = cantidad;
     }
@@ -96,41 +94,59 @@ export class EventDetailsPage implements OnInit {
       header: 'Precio del Evento',
       type: 'number',
       placeholder: 'Ingrese el precio',
-      minValue: 1
+      minValue: 1,
     });
-  
+
     if (precio !== null) {
       this.precioevento = precio;
     }
   }
 
   ////////////////////modal cantidad de personas///////////////////////
-async abrirModalMesas() {
-  const numMesas = await this.modalService.openInputModal<number>({
-    header: 'Cantidad de Mesas',
-    type: 'number',
-    placeholder: 'Ingrese la cantidad',
-    minValue: 1
-  });
-  
-  if (numMesas !== null) {
-    this.numMesas = numMesas;
+  async abrirModalMesas() {
+    const numMesas = await this.modalService.openInputModal<number>({
+      header: 'Cantidad de Mesas',
+      type: 'number',
+      placeholder: 'Ingrese la cantidad',
+      minValue: 1,
+    });
+
+    if (numMesas !== null) {
+      this.numMesas = numMesas;
+    }
   }
-}
 
   ////////////////////modal cantidad de personas///////////////////////
-async abrirModalSillas() {
-  const numSillas = await this.modalService.openInputModal<number>({
-    header: 'Cantidad de Sillas',
-    type: 'number',
-    placeholder: 'Ingrese la cantidad',
-    minValue: 1
-  });
-  
-  if (numSillas !== null) {
-    this.numSillas = numSillas;
+  async abrirModalSillas() {
+    const numSillas = await this.modalService.openInputModal<number>({
+      header: 'Cantidad de Sillas',
+      type: 'number',
+      placeholder: 'Ingrese la cantidad',
+      minValue: 1,
+    });
+
+    if (numSillas !== null) {
+      this.numSillas = numSillas;
+    }
   }
-}
+  //////////adicionales////////
+  adicionalchange = new EventEmitter<Adicional[]>();
+
+  async agregarAdicional() {
+    const nuevoAdicional = await this.modalService.agregarAdicional();
+    if (nuevoAdicional) {
+      this.adicional.push(nuevoAdicional);
+      this.adicionalchange.emit(this.adicional);
+    }
+  }
+
+  eliminarAdicional(adicional: Adicional) {
+    const nuevosAdicionales = this.adicional.filter(
+      (a) => a.id !== adicional.id
+    );
+    this.adicional = nuevosAdicionales;
+    this.adicionalchange.emit(nuevosAdicionales);
+  }
 
   ////////////////////modal adelanto del evento///////////////////////
   async abrirModalAdelanto() {
@@ -143,7 +159,7 @@ async abrirModalSillas() {
           placeholder: 'Ingrese el monto',
           min: 1,
           name: 'adelanto',
-        }
+        },
       ],
       buttons: [
         {
@@ -156,25 +172,27 @@ async abrirModalSillas() {
             if (data.adelanto && data.adelanto > 0) {
               const fechaActual = new Date().toISOString().split('T')[0]; // Fecha actual en formato YYYY-MM-DD
               // Guardamos el adelanto en un arreglo, asegurándonos de que el monto es un número
-              this.adelanto.push({ montoAdelanto: Number(data.adelanto), fechaAdelanto: fechaActual });
+              this.adelanto.push({
+                montoAdelanto: Number(data.adelanto),
+                fechaAdelanto: fechaActual,
+              });
             }
           },
         },
       ],
     });
-  
+
     await alert.present();
   }
-  
 
   ////////////////////modal cliente del evento///////////////////////
   async abrirModalCliente() {
     const cliente = await this.modalService.openInputModal<string>({
       header: 'Cliente',
       type: 'text',
-      placeholder: 'Ingrese el cliente'
+      placeholder: 'Ingrese el cliente',
     });
-    
+
     if (cliente !== null) {
       this.cliente = cliente;
     }
@@ -187,14 +205,14 @@ async abrirModalSillas() {
       cssClass: 'custom-alert',
       inputs: [
         {
-          type: 'number', 
+          type: 'number',
           placeholder: 'Ingrese el Teléfono (9 dígitos)',
           name: 'numCliente',
           attributes: {
             pattern: '[0-9]{9}',
             maxlength: '9',
-            minlength: '9'
-          }
+            minlength: '9',
+          },
         },
       ],
       buttons: [
@@ -206,12 +224,12 @@ async abrirModalSillas() {
           text: 'OK',
           handler: (data) => {
             const telefono = data.numCliente ? data.numCliente.trim() : '';
-            
+
             if (telefono.length !== 9 || !/^\d{9}$/.test(telefono)) {
               this.mostrarErrorTelefono();
-              return false; 
+              return false;
             }
-            
+
             this.numCliente = telefono;
             return true;
           },
@@ -227,25 +245,31 @@ async abrirModalSillas() {
     const errorAlert = this.alertController.create({
       header: 'Error',
       message: 'Por favor, ingrese un número de celular válido de 9 dígitos.',
-      buttons: ['Aceptar']
+      buttons: ['Aceptar'],
     });
-    errorAlert.then(alert => alert.present());
+    errorAlert.then((alert) => alert.present());
   }
 
-  private async mostrarToast(mensaje: string, color: 'success' | 'danger' = 'success') {
+  private async mostrarToast(
+    mensaje: string,
+    color: 'success' | 'danger' = 'success'
+  ) {
     const toast = await this.toastController.create({
       message: mensaje,
       duration: 2000,
       color: color,
-      position: 'middle'
+      position: 'middle',
     });
     toast.present();
   }
 
   private validarFormulario(): boolean {
     console.log('Validando formulario...');
-  
-    if (!this.tipoEventoSeleccionado || this.tipoEventoSeleccionado.trim() === '') {
+
+    if (
+      !this.tipoEventoSeleccionado ||
+      this.tipoEventoSeleccionado.trim() === ''
+    ) {
       this.mostrarToast('Seleccione el tipo de evento', 'danger');
       return false;
     }
@@ -273,11 +297,10 @@ async abrirModalSillas() {
       this.mostrarToast('Ingrese el numero del cliente', 'danger');
       return false;
     }
-    
-  
+
     return true;
   }
-  
+
   async guardarEvento() {
     console.log('Iniciando guardado de evento...');
     if (!this.validarFormulario()) {
@@ -291,24 +314,27 @@ async abrirModalSillas() {
       cliente: this.cliente,
       numCliente: this.numCliente,
       platoId: this.platoSeleccionado,
-      platoNombre: this.platos.find(plato => plato.nombre === this.platoSeleccionado)?.nombre || '',
+      platoNombre:
+        this.platos.find((plato) => plato.nombre === this.platoSeleccionado)
+          ?.nombre || '',
       adicional: this.adicional,
       cantidadPersonas: this.cantidadPersonas,
       precioEvento: this.precioevento,
       hora: this.horaSeleccionada,
       extras: this.extras,
-      adelanto: this.adelanto,  // Adelanto es ahora un arreglo
+      adelanto: this.adelanto, // Adelanto es ahora un arreglo
       estado: 'pendiente',
       numMesas: this.numMesas,
-      numSillas: this.numSillas
+      numSillas: this.numSillas,
     };
-  
+
     try {
       await this.firebaseService.addEvento(nuevoEvento);
       await this.mostrarToast('Evento guardado exitosamente');
-      this.router.navigate(['/details'], { queryParams: { date: this.fechaSeleccionada } });
+      this.router.navigate(['/details'], {
+        queryParams: { date: this.fechaSeleccionada },
+      });
     } catch (error) {
-      console.error('Error al guardar el evento:', error);
       this.mostrarToast('Error al guardar el evento', 'danger');
     }
   }
@@ -325,44 +351,25 @@ async abrirModalSillas() {
   }
 
   eliminarExtra(extra: Extra) {
-    const nuevosExtras = this.extras.filter(e => e.id !== extra.id);
+    const nuevosExtras = this.extras.filter((e) => e.id !== extra.id);
     this.extras = nuevosExtras;
     this.extrasChange.emit(nuevosExtras);
   }
 
-  //////////adicionales////////
-  adicionalchange = new EventEmitter<Adicional[]>();
-
-  async agregarAdicional() {
-    const nuevoAdicional = await this.modalService.agregarAdicional();
-    if (nuevoAdicional) {
-      this.adicional.push(nuevoAdicional);
-      this.adicionalchange.emit(this.adicional);
-    }
-  }
-
-  eliminarAdicional(adicional: Adicional) {
-    const nuevosAdicionales = this.adicional.filter(a => a.id !== adicional.id);
-    this.adicional = nuevosAdicionales;
-    this.adicionalchange.emit(nuevosAdicionales);
-  }
-
   get adelantoFechas() {
-    return this.adelanto.map(a => a.fechaAdelanto).join(' ');
+    return this.adelanto.map((a) => a.fechaAdelanto).join(' ');
   }
 
   obtenerMontoYFechaAdelanto(): string {
-  if (this.adelanto?.length > 0) {
-    const montos = this.adelanto.map(a => a.montoAdelanto).join(' + ');
-    const fechas = this.adelanto.map(a => a.fechaAdelanto).join(' / ');
-    return `${montos} - ${fechas}`;
+    if (this.adelanto?.length > 0) {
+      const montos = this.adelanto.map((a) => a.montoAdelanto).join(' + ');
+      const fechas = this.adelanto.map((a) => a.fechaAdelanto).join(' / ');
+      return `${montos} - ${fechas}`;
+    }
+    return '- -'; // Si no hay adelantos
   }
-  return '- -'; // Si no hay adelantos
-}
-
 
   eliminarAdelanto(adelanto: Adelanto) {
-    this.adelanto = this.adelanto.filter(a => a !== adelanto);
+    this.adelanto = this.adelanto.filter((a) => a !== adelanto);
   }
-  
 }

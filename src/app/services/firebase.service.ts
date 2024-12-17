@@ -1,23 +1,40 @@
 import { inject, Injectable } from '@angular/core';
 import { Plato } from '../interfaces/plato.module';
 import { Evento } from '../interfaces/eventos.module';
-import { collectionData, Firestore, collection, addDoc, doc, deleteDoc, updateDoc, query, where, getDocs, setDoc } from '@angular/fire/firestore';
+import {
+  collectionData,
+  Firestore,
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where,
+  getDocs,
+  setDoc,
+} from '@angular/fire/firestore';
 import { Encargado } from '../interfaces/encargado.module';
 import { from, map, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseService {
+  firestore = inject(Firestore);
 
-  firestore = inject(Firestore)
 
+
+  /////contador para la cotizaciion/////
   async obtenerSiguienteNumeroCotizacion(): Promise<number> {
-    const referenciaContador = doc(this.firestore, 'contadores/numeroCotizacion');
-    
+    const referenciaContador = doc(
+      this.firestore,
+      'contadores/numeroCotizacion'
+    );
+
     try {
       const contador = await getDocs(collection(this.firestore, 'contadores'));
-      
+
       if (contador.empty) {
         // Si no existe, crea el documento con el número 1
         await setDoc(referenciaContador, { actual: 1 });
@@ -25,8 +42,13 @@ export class FirebaseService {
       }
 
       // Obtener el documento de contador
-      const contadorDoc = await getDocs(query(collection(this.firestore, 'contadores'), where('__name__', '==', 'numeroCotizacion')));
-      
+      const contadorDoc = await getDocs(
+        query(
+          collection(this.firestore, 'contadores'),
+          where('__name__', '==', 'numeroCotizacion')
+        )
+      );
+
       if (contadorDoc.empty) {
         await setDoc(referenciaContador, { actual: 1 });
         return 1;
@@ -38,7 +60,6 @@ export class FirebaseService {
       // Actualizar el contador
       await updateDoc(referenciaContador, { actual: nuevoNumero });
       return nuevoNumero;
-
     } catch (error) {
       console.error('Error al obtener número de cotización:', error);
       // Si hay cualquier error, devolver 1 como valor predeterminado
@@ -46,15 +67,44 @@ export class FirebaseService {
     }
   }
 
-  getEncargado(): Observable<Encargado[]> {
-    const encargadoRef = collection(this.firestore, 'encargado');
-    return collectionData(encargadoRef, { idField: 'id' }) as Observable<Encargado[]>; 
-  }
 
-  // Agregar un plato
+
+
+  ///metodo para encargados///
+
+  // Agregar un encargado
   addEncargado(encargado: Encargado) {
     const encargadoRef = collection(this.firestore, 'encargado');
     return addDoc(encargadoRef, encargado);
+  }
+
+  getEncargado(): Observable<Encargado[]> {
+    const encargadoRef = collection(this.firestore, 'encargado');
+    return collectionData(encargadoRef, { idField: 'id' }) as Observable<
+      Encargado[]
+    >;
+  }
+
+  // Eliminar un encargado
+  deleteEncargado(id: string) {
+    const encargadoDocRef = doc(this.firestore, `encargado/${id}`);
+    return deleteDoc(encargadoDocRef);
+  }
+
+
+
+
+  //// metodos pata platos////
+
+  // Agregar un plato
+  addPlato(plato: Plato) {
+    const platosRef = collection(this.firestore, 'platos');
+    return addDoc(platosRef, plato);
+  }
+
+  getPlatos(): Observable<Plato[]> {
+    const platosRef = collection(this.firestore, 'platos');
+    return collectionData(platosRef, { idField: 'id' }) as Observable<Plato[]>;
   }
 
   // Eliminar un plato
@@ -63,60 +113,18 @@ export class FirebaseService {
     return deleteDoc(platoDocRef);
   }
 
-  getPlatos(): Observable<Plato[]> {
-    const platosRef = collection(this.firestore, 'platos');
-    return collectionData(platosRef, { idField: 'id' }) as Observable<Plato[]>; 
-  }
 
-  // Agregar un plato
-  addPlato(plato: Plato) {
-    const platosRef = collection(this.firestore, 'platos');
-    return addDoc(platosRef, plato);
-  }
 
-  // Eliminar un plato
-  deleteEncargado(id: string) {
-    const encargadoDocRef = doc(this.firestore, `encargado/${id}`);
-    return deleteDoc(encargadoDocRef);
-  }
 
-  // Nuevos métodos para Eventos
-  getEventos(): Observable<Evento[]> {
-    const eventosRef = collection(this.firestore, 'eventos');
-    return collectionData(eventosRef, { idField: 'id' }) as Observable<Evento[]>; 
-  }
 
-  getEventosPorFecha(fecha: string): Observable<Evento[]> {
-    const eventosRef = collection(this.firestore, 'eventos');
-    const q = query(eventosRef, where('fecha', '==', fecha));
-  
-    return from(getDocs(q)).pipe(
-      map(snapshot => 
-        snapshot.docs.map(doc => {
-          const data = doc.data();
-  
-          // Usamos la notación de corchetes para acceder a 'adelanto'
-          const adelanto = Array.isArray(data["adelanto"]) ? data["adelanto"] : 
-                          (data["adelanto"] ? [data["adelanto"]] : []);
-  
-          return {
-            id: doc.id,
-            ...data,
-            adelanto  // Asignamos adelanto correctamente como arreglo
-          } as Evento;
-        })
-      )
-    );
-  }
-  
-  
+  //// Nuevos métodos para Eventos////
 
   addEvento(evento: Evento) {
     const eventosRef = collection(this.firestore, 'eventos');
     const eventoConFecha = {
       ...evento,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
     return addDoc(eventosRef, eventoConFecha);
   }
@@ -125,7 +133,7 @@ export class FirebaseService {
     const eventoDocRef = doc(this.firestore, `eventos/${id}`);
     const eventoActualizado = {
       ...evento,
-      updatedAt: new Date()
+      updatedAt: new Date(),
     };
     return updateDoc(eventoDocRef, eventoActualizado);
   }
@@ -135,34 +143,61 @@ export class FirebaseService {
     return deleteDoc(eventoDocRef);
   }
 
-  // Método para verificar disponibilidad
-  async verificarDisponibilidad(fecha: string, hora: string): Promise<boolean> {
+  getEventos(): Observable<Evento[]> {
     const eventosRef = collection(this.firestore, 'eventos');
-    const q = query(
-      eventosRef, 
-      where('fecha', '==', fecha),
-      where('hora', '==', hora)
-    );
-    
-    const snapshot = await getDocs(q);
-    return snapshot.empty; // true si no hay eventos en esa fecha y hora
+    return collectionData(eventosRef, { idField: 'id' }) as Observable<
+      Evento[]
+    >;
   }
 
+  getEventosPorFecha(fecha: string): Observable<Evento[]> {
+    const eventosRef = collection(this.firestore, 'eventos');
+    const q = query(eventosRef, where('fecha', '==', fecha));
+
+    return from(getDocs(q)).pipe(
+      map((snapshot) =>
+        snapshot.docs.map((doc) => {
+          const data = doc.data();
+
+          // Usamos la notación de corchetes para acceder a 'adelanto'
+          const adelanto = Array.isArray(data['adelanto'])
+            ? data['adelanto']
+            : data['adelanto']
+            ? [data['adelanto']]
+            : [];
+
+          return {
+            id: doc.id,
+            ...data,
+            adelanto, // Asignamos adelanto correctamente como arreglo
+          } as Evento;
+        })
+      )
+    );
+  }
+
+
   // Método para obtener eventos por rango de fechas
-  getEventosPorRango(fechaInicio: string, fechaFin: string): Observable<Evento[]> {
+  getEventosPorRango(
+    fechaInicio: string,
+    fechaFin: string
+  ): Observable<Evento[]> {
     const eventosRef = collection(this.firestore, 'eventos');
     const q = query(
       eventosRef,
       where('fecha', '>=', fechaInicio),
       where('fecha', '<=', fechaFin)
     );
-    
+
     return from(getDocs(q)).pipe(
-      map(snapshot => 
-        snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        } as Evento))
+      map((snapshot) =>
+        snapshot.docs.map(
+          (doc) =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            } as Evento)
+        )
       )
     );
   }
